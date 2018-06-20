@@ -29,3 +29,13 @@
 - v-model只能运用在表单元素中
 - 复习eval(),解析执行字符串。
 - [v-model计算器案例](../code/v-model计算器.html)
+## v-for指令
+- 迭代数组
+```javascript
+<p v-for='item in list'>{{item}}</p>
+//<p v-for='(item,i) in list'>索引值：{{i}}----{{item}}</p>
+data: {
+    list: [1,2,3,4,5]
+}
+```
+- 循环对象数组
