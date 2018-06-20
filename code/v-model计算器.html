@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 实现数据的双向绑定 -->
+        <input type="text" v-model='n1'>
+        <select v-model='opt'>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" v-model='n2'>
+        <input type="button" @click='cal' value="=">
+        <input type="text" v-bind:value='result'>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                n1: 0,
+                n2: 0,
+                opt: '+',
+                result: 0
+            },
+            methods: {
+                cal() {
+                    var calString = 'parseInt(this.n1)'+ this.opt +'parseInt(this.n2)';
+                    this.result = eval(calString);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

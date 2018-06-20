@@ -22,3 +22,10 @@
 - v-on:click="show"
 - method: {shwo: function() {}}
 - 缩写是@
+## v-model指令
+- 实现双向数据绑定(数据变了页面中的变，同样在页面中修改后data中的数据也会变，即双向)
+- 使用v-bind只能实现数据的单向绑定，从M到V
+- v-model='属性名'可实现双向绑定。
+- v-model只能运用在表单元素中
+- 复习eval(),解析执行字符串。
+- [v-model计算器案例](../code/v-model计算器.html)
