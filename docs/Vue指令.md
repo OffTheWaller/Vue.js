@@ -39,3 +39,34 @@ data: {
 }
 ```
 - 循环对象数组
+    - 也可以加入第二个参数：索引
+```javascript
+<p v-for='item in list'>{{item.name}}</p>
+data: {
+    {id:1,name:'zs'},
+    {id:2,name:'lisi'}
+}
+```
+- 循环对象
+    - 参数的顺序是：值、键、索引
+    - 绑定key可以避免渲染时出现的混乱:key='item.id'(key必须是唯一的字符串或数字)
+```javascript
+<p v-for='(val,key,index) in user'>{{val}}---{{key}}---{{index}}</p>
+data: {
+    user: {
+        id: 1,
+        name: 'zs',
+        gender: '男'
+    }
+}
+```
+- 迭代数字
+    - 使用v-for迭代数字是从1开始，不是从0开始
+```javascript
+<p v-for='count in 10'>这是第{{count}}次迭代</p>
+```
+## v-if指令和v-show指令
+- `v-if`指令会直接让元素删除或创建
+- `v-show`指令是给元素加了个display:none属性(没有DOM的删除和创建)
+- 如果元素需要频繁的切换，最好不要使用v-if，尽量使用v-show
+- v-show有初始渲染消耗
