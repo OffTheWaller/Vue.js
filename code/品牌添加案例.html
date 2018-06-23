@@ -23,12 +23,14 @@
                 </label>
                 <label>
                     name:
-                    <input type="text" class="form-control" v-model='name'>
+                    <!-- 绑定一个键盘事件，按回车键也能添加 -->
+                    <input type="text" class="form-control" v-model='name' @keyup.enter='add'>
                 </label>
                 <input type="button" value="添加" class="btn btn-success" @click='add'>
                 <label>
                     search:
-                    <input type="text" class="form-control" v-model='keywords'>
+                    <!-- 这里v-color中的值red如果不加引号为字符串的话，那么代表一个变量，会从data中找这个变量，就从data写死了 -->
+                    <input type="text" class="form-control" v-model='keywords' v-focus v-color='"red"'>
                 </label>
             </div>
         </div>
@@ -46,17 +48,47 @@
                 <tr v-for='item in search(keywords)' :key='item.id'>
                     <td>{{item.id}}</td>
                     <td>{{item.name}}</td>
-                    <td>{{item.ctime}}</td>
+                    <td>{{item.ctime | dateFormat}} </td>
                     <td>
                         <a href="#" @click.prevent='rm(item.id)'>删除</a>
                     </td>
                 </tr>
             </tbody>
         </table>
+    </div>
 
-
+    <div id="app2">
+        <h3 v-fontweight='700' v-fontsize='60'>{{date | dateFormat}}</h3>
     </div>
     <script>
+
+        //自定义字体颜色指令
+        Vue.directive('color', {
+            bind: function (el,binding) {  //这里的binding形参就是用来接收调用时赋的值
+                el.style.color = binding.value;
+            }
+        })
+        //自定义全局指令(自动获取焦点)
+        Vue.directive('focus', {
+            inserted: function (el) {
+                //el就是要绑定的元素原生js对象
+                el.focus();
+            
+            }
+        })
+        //定义全局过滤器，用于格式化时间格式
+        Vue.filter('dateFormat', function (date) {
+            var dt = new Date(date);
+            var year = dt.getFullYear();
+            var month = dt.getMonth() + 1;
+            var day = dt.getDate();
+            var hour = dt.getHours();
+            var min = dt.getMinutes();
+            var sec = dt.getSeconds();
+            //使用模板字符串，快速格式化
+            return `${year}-${month}-${day} ${hour}:${min}:${sec}`
+        })
+
         var vm = new Vue({
             el: '#app',
             data: {
@@ -109,6 +141,40 @@
                     })
                 }
             }
+        })
+
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                date: new Date()
+            },
+            filters: {
+                dateFormat: function (date) {
+                    var dt = new Date(date);
+                    var year = dt.getFullYear();
+                    var month = (dt.getMonth() + 1).toString().padStart(2,'0');
+                    var day = dt.getDate().toString().padStart(2,'0');
+                    var hour = dt.getHours().toString().padStart(2,'0');
+                    var min = dt.getMinutes().toString().padStart(2,'0');
+                    var sec = dt.getSeconds().toString().padStart(2,'0');
+                    //使用模板字符串，快速格式化
+                    return `${year}-${month}-${day} ${hour}:${min}:${sec} 私有过滤器`
+                }
+            },
+            //私有指令的绑定
+            directives: {
+                'fontweight': {
+                    bind: function (el,binding) {
+                        el.style.fontWeight = binding.value;
+                        //binding.value是解析后的值，binding.expression是直接获取传入的字符串
+                    }
+                },
+                //如果只在bind和updated钩子函数上绑定，则可简写
+                'fontsize': function (el,binding) {
+                    el.style.fontSize = parseInt(binding.value) + 'px';
+                }
+            }
+
         })
     </script>
 </body>
