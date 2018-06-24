@@ -28,3 +28,5 @@
 [品牌添加案例代码](./code/品牌添加案例.html)
 ## 生命周期
 [生命周期](./docs/生命周期.md)
+## ajax请求
+[vue-resource](./docs/vue-resource.md)
