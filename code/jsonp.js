@@ -10,7 +10,7 @@ server.on('request', function (req, res) {
             age: 30,
             gender: '男'
         };
-        var scriptStr = `${query.callback}(${JSON.stringify(data)})`;
+        var scriptStr = `${query.callback}()`;
         res.end(scriptStr);
     } else {
         res.end('404');

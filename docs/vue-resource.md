@@ -14,8 +14,10 @@ var vm = new Vue({
       })
     },
     postInfo() { // 发起 post 请求   application/x-wwww-form-urlencoded
-      //  手动发起的 Post 请求，默认没有表单格式，所以，有的服务器处理不了
-      //  通过 post 方法的第三个参数， { emulateJSON: true } 设置 提交的内容类型 为 普通表单数据格式
+          //2. this.$http.post() 中接收三个参数：
+          //   2.1 第一个参数： 要请求的URL地址
+          //   2.2 第二个参数： 要提交给服务器的数据 ，要以对象形式提交给服务器 { name: this.name }
+          //   3.3 第三个参数： 是一个配置对象，要以哪种表单数据类型提交过去， { emulateJSON: true }, 以普通表单格式，将数据提交给服务器 application/x-www-form-urlencoded
       this.$http.post('url', {}, { emulateJSON: true }).then(result => {
         console.log(result.body)
       })
@@ -36,3 +38,12 @@ var vm = new Vue({
     - 再把这个回调方法的名称，通过URL传参的形式(也就是?callback=方法名)，提交到服务器的数据接口；
     - 服务器数据接口组织好要发送给客户端的数据，再拿着客户端传递过来的回调方法名称，拼接出一个调用这个方法的字符串，发送给客户端去解析执行；
     - 客户端拿到服务器返回的字符串之后，当作Script脚本去解析执行，这样就能够拿到JSONP的数据了；
+    - 概括：就是利用客户端的一个script标签来动态拿数据，给客户端定义好的同名方法调用数据，解析数据。
+
+- 可以利用vue-resource直接向服务器发ajax请求，通过设置好的api获取到json数据，然后赋值给data，进行页面渲染
+- 全局配置请求数据接口根域名
+  - Vue.http.options.root = '/root';
+  - 后面请求地址中不能以/开头，要使用相对路径
+- 全局启用emulateJSON选项
+  - Vue.http.options.emulateJSON = true;
+  - 如果已经全局配置了emulateJSON选项，在post请求中的第三个参数就可以省略了

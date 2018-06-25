@@ -30,3 +30,5 @@
 [生命周期](./docs/生命周期.md)
 ## ajax请求
 [vue-resource](./docs/vue-resource.md)
+## 动画
+
