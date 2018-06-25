@@ -31,4 +31,4 @@
 ## ajax请求
 [vue-resource](./docs/vue-resource.md)
 ## 动画
-
+[vue-动画](./docs/动画.md)
