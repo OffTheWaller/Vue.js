@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="登录组件" @click='componentId="login"'>
+        <input type="button" value="注册组件" @click='componentId="register"'>
+        <!-- 通过 mode 属性,设置组件切换时候的 模式 -->
+        <transition mode='out-in'>
+            <!-- Vue提供的标签，占位符 -->
+            <component :is="componentId"></component>
+        </transition>
+        
+    </div>
+    <template id="login">
+        <div>
+            <h2>登录组件</h2>
+        </div>
+    </template>
+    <template id="register">
+        <div>
+            <h2>注册组件</h2>
+        </div>
+    </template>
+
+    <script>
+        Vue.component('login',{
+            template: '#login'
+        })
+
+        Vue.component('register',{
+            template: '#register'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                componentId: 'register'
+            }
+        });
+    </script>
+    
+</body>
+</html>

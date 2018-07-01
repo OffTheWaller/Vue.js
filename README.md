@@ -32,3 +32,5 @@
 [vue-resource](./docs/vue-resource.md)
 ## 动画
 [vue-动画](./docs/动画.md)
+## 组件
+[Vue-组件](./docs/vue-组件.md)

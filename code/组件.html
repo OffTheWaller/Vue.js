@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 要使用组件的时候，直接当成html标签引用就行 -->
+        <jscom></jscom>
+        <hr>
+        <jscom2></jscom2>
+        <hr>
+        <jscom3></jscom3>
+        <hr>
+        
+    </div>
+
+    <!-- 定义一个私有组件 -->
+    <div id="app2">
+        <private></private>
+        <hr>
+        <jscom4></jscom4>
+    </div>
+
+    <!-- 使用template定义组件 -->
+    <template id="jstem1">
+        <h2>这是使用template标签定义的组件</h2>
+    </template>
+
+    <template id="jstem2">
+        <h2>这是使用template标签定义的私有组件</h2>
+    </template>
+
+    <!-- 组件中的data使用 -->
+    <template id="jstem3">
+        <h3>使用组件中的data:{{ msg }}</h3>
+    </template>
+
+
+    <script>
+        //定义全局组件
+        Vue.component('jscom',Vue.extend({
+            template: '<h3>这是定义的一个组件</h3>'
+        }));
+        //可以直接传对象
+        Vue.component('jscom2',{
+            template: '<h4>这是使用直接传对象创建的组件</h4>'
+        })
+        //使用template标签定义的组件
+        Vue.component('jscom3',{
+            template: '#jstem1'
+            
+        });
+        //组件中的data
+        Vue.component('jscom4',{
+            template: '#jstem3',
+            data: function () {
+                return {
+                    msg: '我爱北京'
+                }
+            }
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+        
+
+
+        //定义私有组件
+        var vm2 = new Vue({
+            el: '#app2',
+            components: {
+                private: {
+                    template: '#jstem2'
+                }
+            }
+        });
+    </script>
+</body>
+</html>
