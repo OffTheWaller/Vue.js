@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+    <style>
+        .js-enter,
+        .js-leave-to {
+            opacity: 0;
+            transform: translateX(80px);
+        }
+        .js-enter-active,
+        .js-leave-active {
+            transition: all 0.8s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+        <input type="button" value="显示隐藏" @click='flag=!flag'>
+        <transition name='js'>
+            <h2 v-if='flag' :style='red'>{{ msg }}</h2>
+        </transition>
+        
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: false,
+                msg: '我爱中国',
+                red: {'color':'red'}
+            },
+
+        });
+    </script>
+</body>
+</html>
