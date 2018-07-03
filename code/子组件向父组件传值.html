@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <com1 @func='show'></com1>
+    </div>
+    <template id='tmpl'>
+        <div>
+            <h1>这是一个子组件</h1>
+            <input type="button" value="点击向父组件中传值" @click='post'>
+        </div>
+    </template>
+
+    <script>
+
+        var com1 = {
+            template: '#tmpl',
+            data() {
+                return {
+                    sonmsg: '这是子组件中的参数值'
+                }
+            },
+            methods: {
+                post() {
+                    this.$emit('func',this.sonmsg)
+                }
+            }
+        }
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: ''
+            },
+            methods: {
+                show(sondata) {
+                    this.msg = sondata
+                    console.log(this.msg)
+                }
+            },
+            components: {
+                com1
+            }
+        });
+    </script>
+</body>
+</html>
