@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <com2 @func='show'></com2>
+    </div>
+
+    <template id="tmpl">
+        <div>
+            <h1 ref="h1">这是个子组件</h1>
+            <input type="button" value="拿父组件的方法" @click='sonclick'>
+            <input type="button" value="获取DOM节点" @click='getDom'>
+        </div>
+    </template>
+
+    <script>
+        var com2 = {
+            template: '#tmpl',
+            data() {
+                return {
+                    sonmsg: '我爱中国'
+                }
+            },
+            methods: {
+                sonclick() {
+                    this.$emit('func',this.sonmsg)
+                },
+                //通过this.$refs.ref值  来获取到DOM节点
+                getDom() {
+                    console.log(this.$refs.h1.innerText)
+                }
+                
+            }
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: ''
+            },
+            components: {
+                com2
+            },
+            methods: {
+                show(data) {
+                    console.log(data)
+                },
+                
+            }
+
+        });
+
+        
+    </script>
+</body>
+</html>

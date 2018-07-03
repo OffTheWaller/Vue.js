@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <jscom1 v-bind:parentmsg='msg'></jscom1>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '这是父组件中的值'
+            },
+            components: {
+                jscom1: {
+                    template: '<h1>这是子组件---{{ parentmsg }}---{{ sonmsg }}</h1>',
+                    data() {
+                        return {
+                            sonmsg: '这是子组件中的值'
+                        }
+                    },
+                    props: ['parentmsg']
+                }
+            }
+        });
+    </script>
+</body>
+</html>

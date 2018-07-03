@@ -45,6 +45,24 @@ var vm2 = new Vue({
     }
 });
 ```
+- 常用的组件定义方式
+    - 先定义一个对象字面量，里面写组件模板
+    - 然后把这个模板放到componet里
+```javascript
+var login = {
+      template: '<h1>1234</h1>'
+    }
+    var vm = new Vue({
+      el: '#app',
+      data: {},
+      methods: {},
+      components: {
+        // '组件的名称': 组件的模板对象
+        // 'mylogin': login
+        login
+      }
+    });
+```
 ### 组件中的data
 - 组件中的data必须是一个方法，数据可以是对象，使用return返回就行，使用方法正常
 ```javascript
@@ -119,4 +137,29 @@ Vue.component('jscom4',{
     <component :is="componentId"></component>
 </transition>
 ```
+- localStorage本地化存储
+    - clear
+    - getItem
+    - hasOwnProperty
+    - key
+    - length
+    - removeItem
+    - setItem
+    - toLocaleString
+- localStorage只能存储字符串，所以要将json使用一下`JSON.stringify()`后存储
+- 存储时使用localStorage.setItem('name','zs')
+- 读取时使用lacalStorage.getItem('name')
+### 父组件向子组件传值
+- 在vm实例中的components对象中定义的就是子组件
+- 在子组件的使用标签上通过v-bind绑定一个属性，值就是父组件中的数据`<jscom1 v-bind:parentmsg='msg'></jscom1>`
+- 在子组件中通过props数组定义，`props: ['parentmsg']`
+- 这样在子组件中直接使用这个值就行`template: '<h1>这是子组件---{{ parentmsg }}---{{ sonmsg }}</h1>'`
+### 父组件向子组件传递方法
+- 在要使用的子组件中通过事件绑定，`<com2 @func="show"></com2>`，用变量名func接收父组件的方法show
+- 在定义子组件的方法的时候通过`this.$emit('func', this.sonmsg)`来触发父组件的方法，其中第二个参数是传递到父组件方法中的参数
+- **注意**子组件在使用对象字面量定义模板的时候，必须要写在父组件的上面，这样在往父组件上挂载的时候才不会出错，不然会出现找不到子组件的报错
+### 通过$refs获取DOM元素
+- 给元素绑定`ref`属性
+- 通过`this.$refs.ref属性值`获取到DOM对象
+
 
