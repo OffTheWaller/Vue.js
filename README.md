@@ -34,3 +34,5 @@
 [vue-动画](./docs/动画.md)
 ## 组件
 [Vue-组件](./docs/vue-组件.md)
+## 路由
+[Vue-路由](./docs/vue-路由.md)

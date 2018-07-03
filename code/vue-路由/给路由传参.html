@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../lib/vue-2.4.0.js"></script>
+    <script src="../../lib/vue-router-3.0.1.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- router-link默认渲染为一个a标签 -->
+        <router-link to='/login?id=01&name=zs'>登录</router-link>
+        <router-link to='/register'>注册</router-link>
+
+        <transition mode='out-in'>
+            <router-view></router-view>
+        </transition>
+    </div>
+    <script>
+
+        //组件的模板对象
+        var login = {
+            template: '<h2>登录组件--{{$route.query.id}}---{{$route.query.name}}</h2>'
+        }
+        var register = {
+            template: '<h2>注册组件</h2>'
+        }
+
+        var routerObj = new VueRouter({
+            routes: [
+                { path: '/', redirect: '/login' }, //这里的redirect和node中的完全是两码事
+                { path: '/login', component: login },
+                { path: '/register', component: register }
+            ],
+            linkActiveClass: 'myactive'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            router: routerObj
+        });
+    </script>
+</body>
+
+</html>

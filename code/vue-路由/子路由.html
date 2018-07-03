@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../../lib/vue-2.4.0.js"></script>
+    <script src="../../lib/vue-router-3.0.1.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user">点击显示用户组件</router-link>
+
+        <router-view></router-view>
+    </div>
+
+    <template id="user1">
+        <div>
+            <h1>这是用户组件(父组件)</h1>
+            <router-link to="/user/login">用户登录</router-link>
+            <router-link to="/user/register">用户注册</router-link>
+
+            <router-view></router-view>
+        </div>
+    </template>
+    <script>
+        var user = {
+            template: '#user1'
+        }
+        var login = {
+            template: '<h2>这是用户登录组件</h2>'
+        }
+        var register = {
+            template: '<h2>这是用户注册组件</h2>'
+        }
+
+        var router = new VueRouter({
+            routes: [
+                {
+                    path: '/user',
+                    component: user,
+                    children: [
+                        { path: 'login', component: login },
+                        { path: 'register', component: register }
+                    ]
+                }
+            ]
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            router: router
+        });
+    </script>
+</body>
+
+</html>
