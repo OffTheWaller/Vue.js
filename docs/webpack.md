@@ -14,7 +14,7 @@
         - -dev是开发依赖，在开发环境中需要用到，上线部署的项目不依赖这些包
 - 第四步：运行`webpack 入口文件路径 输出文件路径`对`main.js`进行处理，输出为`bundle.js`，这时候可以在首页中引入`bundle.js`
 ### webpack的版本问题
-- 如果是webpack 3.0+版本，则可以按以上步骤(这里使用的是3.6.0版本)
+- 如果是webpack 3.0+版本，则可以按以上步骤(这里使用的是`3.6.0`版本)
 - 在webpack4.0+中，有了新的变化，需要安装`webpack-cli`和`mode`设置
 - 以往的项目使用 webpack3 脚手架生成项目初始模板都会有两个甚至三个配置文件，比如 webpack.base.conf.js 、 webpack.prod.conf.js 、 webpack.dev.conf.js 而现在可以做到一个配置文件都不需要，直接在启动命令中传入参数 `--mode development | production` 达到区分不同模式的效果
 - 修改package.json设置不同的模式
@@ -53,10 +53,10 @@
  ```
 - --open 自动打开浏览器
 - --port 3000 修改端口号为3000，默认为8080
-- --contentBase src 默认要打开的目录
-- --hot 启动热更新
+- --contentBase src 默认要打开的目录(如果用了html-webpack-plugin)可以不用设置
+- --hot 启动热更新(`热更新`的作用是不用每次编译重新生成一个完整的bundle.js，只是把修改的代码作为补丁生成。而且在改样式的时候可以不用刷新浏览器就能更新样式,减少不必要的请求)
 - webpack-dev-server托管的路径为'/'，所以这时就要修改index页面中script的src属性为`<scriptsrc="/bundle.js"></script>`，或者把script标签的引用注释掉，换为使用`html-webpack-plugin`插件
-5. 运行`npm run dev`来实现`webpack-dev-server`的启动
+1. 运行`npm run dev`来实现`webpack-dev-server`的启动
 
 ### 使用`html-webpack-plugin`插件配置启动页面
 由于使用`--contentBase`指令的过程比较繁琐，需要指定启动的目录，同时还需要修改index.html中script标签的src属性，所以推荐大家使用`html-webpack-plugin`插件配置启动页面.
@@ -108,6 +108,16 @@ module: { // 用来配置第三方loader模块的
 2. 在`webpack.config.js`中添加处理sass文件的loader模块：
 ```
 { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }
+```
+### 使用webpack处理css中的路径
+1. 运行`cnpm i url-loader file-loader --save-dev`
+2. 在`webpack.config.js`中添加处理url路径的loader模块：
+```
+{ test: /\.(png|jpg|gif)$/, use: 'url-loader' }
+```
+3. 可以通过`limit`指定进行base64编码的图片大小；只有小于指定字节（byte）的图片才会进行base64编码：
+```
+{ test: /\.(png|jpg|gif)$/, use: 'url-loader?limit=43960' },
 ```
 
 ### 使用babel处理高级JS语法
