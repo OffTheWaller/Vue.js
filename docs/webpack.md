@@ -13,6 +13,17 @@
     - 在项目根目录中运行`npm i webpack --save-dev`安装到项目依赖中
         - -dev是开发依赖，在开发环境中需要用到，上线部署的项目不依赖这些包
 - 第四步：运行`webpack 入口文件路径 输出文件路径`对`main.js`进行处理，输出为`bundle.js`，这时候可以在首页中引入`bundle.js`
+### webpack的版本问题
+- 如果是webpack 3.0+版本，则可以按以上步骤(这里使用的是3.6.0版本)
+- 在webpack4.0+中，有了新的变化，需要安装`webpack-cli`和`mode`设置
+- 以往的项目使用 webpack3 脚手架生成项目初始模板都会有两个甚至三个配置文件，比如 webpack.base.conf.js 、 webpack.prod.conf.js 、 webpack.dev.conf.js 而现在可以做到一个配置文件都不需要，直接在启动命令中传入参数 `--mode development | production` 达到区分不同模式的效果
+- 修改package.json设置不同的模式
+```
+"scripts": {
+     "dev": "webpack --mode development",
+     "build": "webpack --mode production"
+ },
+```
 
 ### 使用webpack的配置文件简化打包时候的命令
 1. 在`项目根目录`中创建`webpack.config.js`
@@ -98,4 +109,27 @@ module: { // 用来配置第三方loader模块的
 ```
 { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }
 ```
+
+### 使用babel处理高级JS语法
+1. 运行`cnpm i babel-core babel-loader babel-plugin-transform-runtime --save-dev`安装babel的相关loader包
+2. 运行`cnpm i babel-preset-es2015 babel-preset-stage-0 --save-dev`安装babel转换的语法
+3. 在`webpack.config.js`中添加相关loader模块，其中需要注意的是，一定要把`node_modules`文件夹添加到排除项：
+```
+{ test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ }
+```
+4. 在项目根目录中添加`.babelrc`文件，并修改这个配置文件如下：
+```
+{
+    "presets":["es2015", "stage-0"],
+    "plugins":["transform-runtime"]
+}
+```
+5. **注意：语法插件`babel-preset-es2015`可以更新为`babel-preset-env`，它包含了所有的ES相关的语法；**
+```
+{
+    "presets":["env", "stage-0"],
+    "plugins":["transform-runtime"]
+}
+```
+6. 在json格式的文件中，不能添加注释，不然会报错，因为json格式规定不允许有注释
 

@@ -164,7 +164,18 @@ Vue.component('jscom4',{
 ### 通过$refs获取DOM元素
 - 给元素绑定`ref`属性
 - 通过`this.$refs.ref属性值`获取到DOM对象
+
 ### watch,computed和methods之间的对比
 1. `computed`属性的结果会被缓存，除非依赖的响应式属性变化才会重新计算。主要当作属性来使用；
 2. `methods`方法表示一个具体的操作，主要书写业务逻辑；
 3. `watch`一个对象，键是需要观察的表达式，值是对应回调函数。主要用来监听某些特定数据的变化，从而进行某些具体的业务逻辑操作；可以看作是`computed`和`methods`的结合体；当需要监听路由时，键的名称是`$route`
+
+### 使用render函数渲染组件
+- 在vm实例上有一个`render`属性，用来渲染组件
+```
+render: function (createElements) { // createElements 是一个 方法，调用它，能够把 指定的 组件模板，渲染为 html 结构
+        return createElements(login)
+        // 注意：这里 return 的结果，会 替换页面中 el 指定的那个 容器
+      }
+```
+- `render`渲染和`components`定义组件使用标签渲染的不同是，使用`render`渲染的组件会替换整个`el`控制的区域，但`componets`里定义的组件，只会替换标签里的内容
