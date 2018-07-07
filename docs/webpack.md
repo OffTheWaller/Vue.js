@@ -142,4 +142,5 @@ module: { // 用来配置第三方loader模块的
 }
 ```
 6. 在json格式的文件中，不能添加注释，不然会报错，因为json格式规定不允许有注释
+7. 在提交的git仓库的时候，由于`node_modules`文件太大太多，需要配置一个`.gitignore`来忽略上传的文件，在该文件中写入`node_modules/`代表忽略node_modules下的文件不提交到仓库
 
