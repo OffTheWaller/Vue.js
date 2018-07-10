@@ -47,3 +47,12 @@ var vm = new Vue({
 - 全局启用emulateJSON选项
   - Vue.http.options.emulateJSON = true;
   - 如果已经全局配置了emulateJSON选项，在post请求中的第三个参数就可以省略了
+
+### 在本地可以测试ajax请求
+- 给vscode安装插件：`express`，`copy relative path`
+- 写一个html页面，其中包含发ajax代码
+- 写一个.json文件，里面自己写一些要请求的假数据，json格式的
+- 把ajax请求的url改成本地写假数据的那个.json文件的相对路径
+- 在vscode中使用`ctrl+shift+p`打开指令框，输入`express`，按需要打开服务器
+- 在html页面上右键点击`copy relative path`，在浏览器url地址中输入/，然后粘贴上刚才复制的文件相对地址
+- 按正常发送ajax请求，测试即可
