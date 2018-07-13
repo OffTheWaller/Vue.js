@@ -81,5 +81,9 @@ var router = new VueRouter({
       ]
     })
 ```
+### 编程式导航
+- 页面跳转时可以选择以下两种方法
+  - 使用 a 标签，然后写href属性实现跳转，或者router-link中的to属性实现跳转。这种称为标签式跳转
+  - 编程式跳转：给需要点击后跳转的元素绑定一个click点击事件，在点击事件中写js代码来控制跳转。如：`window.location.href`和`this.$router.push()`
 
 
