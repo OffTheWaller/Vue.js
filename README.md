@@ -38,3 +38,5 @@
 [Vue-路由](./docs/vue-路由.md)
 ## webpack
 [webpack工具](./docs/webpack.md)
+## vuex
+[vuex](./docs/vuex.md)
