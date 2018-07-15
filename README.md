@@ -40,3 +40,5 @@
 [webpack工具](./docs/webpack.md)
 ## vuex
 [vuex](./docs/vuex.md)
+## 项目部署
+[项目部署](./docs/项目部署.md)
