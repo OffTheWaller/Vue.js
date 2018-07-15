@@ -144,3 +144,25 @@ module: { // 用来配置第三方loader模块的
 6. 在json格式的文件中，不能添加注释，不然会报错，因为json格式规定不允许有注释
 7. 在提交的git仓库的时候，由于`node_modules`文件太大太多，需要配置一个`.gitignore`来忽略上传的文件，在该文件中写入`node_modules/`代表忽略node_modules下的文件不提交到仓库
 
+### 普通网页中使用vue和使用webpack构建的项目中使用vue
+#### 普通网页中
+- 普通网页中使用vue直接在`script`标签中，引入vue.js就可以了，然后就可以使用插值表达式之类的东西
+#### 使用webpack构建的项目中使用vue
+- 如果只是`import Vue from 'vue'`，这时候在html中使用插值表达式是不行的，会报错，运行时环境，因为此时使用import导入的不是最全的vue包
+- 回顾：包的查找规则
+    - 在项目根目录中查找 node_modules 文件夹
+    - 在 node_modules 中，根据包名，找对应的vue文件夹
+    - 在对应的vue文件夹中，找一个叫做 package.json 的包配置文件
+    - 在 package.json 文件中， 找一个 main 属性[ 该属性指定了这个包在加载的时候的入口文件]
+- 所以vue功能不全的解决方法有
+    - 第一种：直接修改vue中package.json中的main属性，使其指向完整的vue.js文件
+    - 第二种：import Vue from '../node_modules/vue/dist/vue.js'
+    - 第三种：在main.js中还是直接使用`import Vue from 'vue'`，在`webpack.config.js`中加一个节点
+        ```javascript
+        resolve: {
+            alias: {
+                'vue$': 'vue/dist/vue.js'
+            }
+        }
+        ```
+
