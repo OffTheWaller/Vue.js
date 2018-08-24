@@ -45,4 +45,4 @@
 ## vue-cli
 [vue-cli](./docs/vue-cli.md)
 ## 前端CRUD练习
-[商品管理系统](https://github.com/OffTheWaller/Vue.js/blob/master/code/CRUD-frontend/crud.html)
+[商品管理系统](./code/CRUD-frontend)
