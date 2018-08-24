@@ -42,3 +42,7 @@
 [vuex](./docs/vuex.md)
 ## 项目部署
 [项目部署](./docs/项目部署.md)
+## vue-cli
+[vue-cli](./docs/vue-cli.md)
+## 前端CRUD练习
+[商品管理系统](./code/CRUD-frontend)
