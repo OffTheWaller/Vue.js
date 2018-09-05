@@ -40,6 +40,9 @@ data: {
     list: [1,2,3,4,5]
 }
 ```
+- 过滤与排序，如果不想改变原数组，想通过一个数组的副本实现过滤或者排序时，建议使用computed计算属性来实现
+  - `match()`方法传一个正则，返回匹配的字符串
+
 - 循环对象数组
     - 也可以加入第二个参数：索引
 ```javascript
@@ -67,6 +70,18 @@ data: {
 ```javascript
 <p v-for='count in 10'>这是第{{count}}次迭代</p>
 ```
+- v-for可以在内置标签<template>上对多个元素进行渲染
+
+```javascript
+<template v-for="book in books">
+	<li>{{book.name}}</li>    
+	<li>{{book.author}}</li>    
+	   
+</template>
+```
+
+
+
 ## v-if指令和v-show指令
 - `v-if`指令会直接让元素删除或创建
 - `v-show`指令是给元素加了个display:none属性(没有DOM的删除和创建)
