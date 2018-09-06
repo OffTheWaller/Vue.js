@@ -18,6 +18,8 @@
     });
 </script>
 ```
+- 全局组件的注册要在Vue实例之前注册，这样才能使用
+
 - 使用template标签定义组件，这样会有代码提示
 ```javascript
 <template id="jstem1">
@@ -154,6 +156,60 @@ Vue.component('jscom4',{
 - 在子组件的使用标签上通过v-bind绑定一个属性，值就是父组件中的数据`<jscom1 v-bind:parentmsg='msg'></jscom1>`
 - 在子组件中通过props数组定义，`props: ['parentmsg']`
 - 这样在子组件中直接使用这个值就行`template: '<h1>这是子组件---{{ parentmsg }}---{{ sonmsg }}</h1>'`
+### props的用途
+
+1. 获取父组件的值，然后在子组件的局部作用域下操作，这样不会干扰父组件中的值
+
+```
+<div id="app">
+        <my-component :init-count="4"></my-component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        Vue.component('my-component', {
+            template: '<div>{{count}}</div>',
+            props: ['initCount'],
+            data: function () {
+                return {
+                    count: this.initCount
+                }
+            }
+        })
+        var app = new Vue({
+            el: '#app'
+        });
+    </script>
+```
+
+2. prop作为需要被转变的原始值传入
+
+```
+    <div id="app">
+        <my-component :width="100"></my-component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        Vue.component('my-component', {
+            template: '<div :style="style">组件内容</div>',
+            props: ['width'],
+            computed: {
+                style: function () {
+                    return {
+                        width: this.width + 'px'
+                    }
+                }
+            }
+        })
+        var app = new Vue({
+            el: '#app'
+        });
+    </script>
+```
+
+- 注意：js中对象和数组是引用类型，如果props是对象和数组时，在子组件里改变是会影响父组件的，这点特别注意
+
 ### 父组件向子组件传递方法
 - 在要使用的子组件中通过事件绑定，`<com2 @func="show"></com2>`，用变量名func接收父组件的方法show
 - 在定义子组件的方法的时候通过`this.$emit('func', this.sonmsg)`来触发父组件的方法，其中第二个参数是传递到父组件方法中的参数
