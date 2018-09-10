@@ -28,6 +28,11 @@
 [vue-动画](./docs/动画.md)
 ## 组件
 [Vue-组件](./docs/vue-组件.md)
+
+[数字输入框组件](./code/组件/数字输入框组件)
+
+[tab栏组件](./code/组件/tab栏组件)
+
 ## 路由
 [Vue-路由](./docs/vue-路由.md)
 ## webpack
