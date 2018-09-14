@@ -258,15 +258,60 @@ Vue.component('jscom4',{
 
 这个语法糖是在子组件标签上使用v-model双向绑定数据，子组件通过$emit方法触发input事件，把值自动传入了父组件的total中，省去了自定义事件的部分
 
+### 非父子组件通信
+
+利用bus作为中介，在app实例mounted的时候监听bus的事件接受值，子组件通过bus发送事件，这样就实现了利用bus进行状态管理，也可以用vuex
+
+```html
+<body>
+    <div id="app">
+        <p>{{ message }}</p>
+        <my-component></my-component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        //new一个bus作为中间仓库
+        var bus = new Vue();
+        //注册子组件
+        Vue.component('my-component', {
+            template: '<button @click="handleClick">传递事件</button>',
+            
+            methods: {
+                handleClick() {
+                    bus.$emit('on-message', '来自子组件的内容')
+                }
+            }
+            
+        });
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: ''
+            },
+            mounted() {
+                //把Vue实例存在_this中
+                var _this = this; 
+                bus.$on('on-message', function (msg) {
+                    _this.message = msg;
+                })
+            }
+        });
+    </script>
+</body>
+```
+
+- 在子组件中可以通过`this.$parent`直接访问该组件的父实例或组件
+- 父组件也可以通过`this.$children`访问它的所有子组件
+
 ### slot用法
 
 - 单个Slot
   - 子组件中定义slot插槽，在子组件的使用标签里的所有内容将替代子组件的slot中的所有内容
 - 具名Slot，在子组件的slot插槽中定义一个name属性，在子组件标签中需要替换的元素上使用slot="刚才的name名字"
 
-### 通过$refs获取DOM元素
-- 给元素绑定`ref`属性
-- 通过`this.$refs.ref属性值`获取到DOM对象
+### 通过$refs获取DOM元素(组件)
+- 给元素(组件标签)绑定`ref`属性
+- 通过`this.$refs.ref属性值`获取到DOM对象(组件实例)
 
 ### watch,computed和methods之间的对比
 1. `computed`属性的结果会被缓存，除非依赖的响应式属性变化才会重新计算。主要当作属性来使用；

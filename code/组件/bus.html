@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{ message }}</p>
+        <my-component></my-component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        //new一个bus作为中间仓库
+        var bus = new Vue();
+        //注册子组件
+        Vue.component('my-component', {
+            template: '<button @click="handleClick">传递事件</button>',
+            
+            methods: {
+                handleClick() {
+                    bus.$emit('on-message', '来自子组件的内容')
+                }
+            }
+            
+        });
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: ''
+            },
+            mounted() {
+                //把Vue实例存在_this中
+                var _this = this; 
+                bus.$on('on-message', function (msg) {
+                    _this.message = msg;
+                })
+            }
+        });
+    </script>
+</body>
+</html>
