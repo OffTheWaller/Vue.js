@@ -209,14 +209,55 @@ Vue.component('jscom4',{
 ```
 
 - 注意：js中对象和数组是引用类型，如果props是对象和数组时，在子组件里改变是会影响父组件的，这点特别注意
+- 以上props都是数组的写法，这样的props是不需要数据验证的，当需要数据验证时，props就得用对象写法了。（当组件提供给他人使用时，推荐进行数据验证）
 
 ### 父组件向子组件传递方法
 - 在要使用的子组件中通过事件绑定，`<com2 @func="show"></com2>`，用变量名func接收父组件的方法show
 - 在定义子组件的方法的时候通过`this.$emit('func', this.sonmsg)`来触发父组件的方法，其中第二个参数是传递到父组件方法中的参数
 ### 子组件向父组件传值
 - 要使用父组件向子组件传递方法的方式，把传的值当成参数传过去
-- 子组件方法中使用this.$emit方法的时候，第二个参数就是要传递到父组件中的值
+- 子组件方法中使用this.$emit方法的时候，第一个参数为绑定在组件标签上的要监听的自定义方法名，第二个参数就是要传递到父组件中的值
 - **注意**子组件在使用对象字面量定义模板的时候，必须要写在父组件的上面，这样在往父组件上挂载的时候才不会出错，不然会出现找不到子组件的报错
+#### v-model的语法糖
+
+子组件在向父组件传值的时候，使用v-model可以监听input，是一个语法糖
+
+```html
+<body>
+    <div id="app">
+        <p>总数：{{ total }}</p>
+        <my-component v-model="total"></my-component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        Vue.component('my-component', {
+            template: '<button @click="handleClick">+1</button>',
+            data() {
+                return {
+                    counter: 0;
+                }
+            },
+            methods: {
+                handleClick() {
+                    this.counter++;
+                    this.$emit('input',this.counter);
+                }
+            }
+            
+        });
+        var app = new Vue({
+            el: '#app',
+            data: {
+                total: 0
+            }
+        });
+    </script>
+</body>
+```
+
+这个语法糖是在子组件标签上使用v-model双向绑定数据，子组件通过$emit方法触发input事件，把值自动传入了父组件的total中，省去了自定义事件的部分
+
 ### slot用法
 
 - 单个Slot
