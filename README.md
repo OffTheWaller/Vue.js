@@ -34,7 +34,7 @@
 [tab栏组件](./code/组件/tab栏组件)
 
 ## 路由
-[Vue-路由](./docs/vue-路由.md)
+[Vue-router](./docs/vue-router.md)
 ## webpack
 [webpack工具](./docs/webpack.md)
 ## vuex

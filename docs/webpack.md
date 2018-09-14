@@ -166,3 +166,31 @@ module: { // 用来配置第三方loader模块的
         }
         ```
 
+### .vue单文件
+
+- .vue的单文件包括<templete><style><script>，其中<style>标签上要加scoped属性，加上scoped表示当前css只在该组件内有效，使用less处理要加<style lang="less">
+- 使用.vue单文件时除了安装vue的loader，还要安装ES6的loader
+
+### ES6补充
+
+- 箭头函数：箭头函数中的this指向与普通函数是不一样的，箭头函数体内的this对象就是定义时所在的对象，而不是使用时所在的对象。例如：
+
+```javascript
+function Timer () {
+    this.id = 1;
+
+    var _this = this;
+    setTimeout(function () {
+        console.log(this.id); //undefined
+        console.log(_this.id); //1
+    }, 1000);
+
+    setTimeout(() => {
+        console.log(this.id); //1
+    }, 5000);
+}
+Timer();
+```
+
+
+

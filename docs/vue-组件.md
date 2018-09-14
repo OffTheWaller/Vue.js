@@ -307,7 +307,7 @@ Vue.component('jscom4',{
 
 - 单个Slot
   - 子组件中定义slot插槽，在子组件的使用标签里的所有内容将替代子组件的slot中的所有内容
-- 具名Slot，在子组件的slot插槽中定义一个name属性，在子组件标签中需要替换的元素上使用slot="刚才的name名字"
+- 具名Slot，在子组件的slot插槽中定义一个name属性，在子组件标签中需要替换的元素上使用slot="刚才的name名字"。例如在子组件中定义`<slot name="footer"></slot>`，然后在引用子组件的标签中使用`<div slot="footer"></div>`就可以把这个div插入到对应的子组件slot插槽中
 
 ### 通过$refs获取DOM元素(组件)
 - 给元素(组件标签)绑定`ref`属性
